@@ -65,15 +65,13 @@ Para mantener las ramas individuales (`dev`, `rama-christian`, `rama-favian`, `r
 * Presiona **`Ctrl + Mayús + K`** (o ve a la barra superior Git > **Push...**).
 * Haz clic en el botón azul **Push** para subir esta actualización a tu rama en la nube. ¡Tu rama ahora está sincronizada!
 
-> ⚠️ Solución de errores: "Committer identity unknown"
->
-> Si al intentar hacer el paso 2 (Merge) la consola muestra un error indicando que Git no conoce tu identidad, debes configurarla por única vez. Abre la pestaña **Terminal** en la parte inferior de Android Studio y ejecuta estos dos comandos:
->
-> ```git config --global user.name "Tu Nombre y Apellido"```
->
-> ```git config --global user.email "tu_correo@ejemplo.com"```
->
-> *Una vez configurado, vuelve a intentar el Paso 2.*
+⚠️ Solución de errores: "Committer identity unknown"
+Si al intentar hacer el paso 2 (Merge) la consola muestra un error indicando que Git no conoce tu identidad, debes configurarla por única vez. Abre la pestaña Terminal en la parte inferior de Android Studio y ejecuta estos dos comandos:
+
+```git config --global user.name "Tu Nombre y Apellido"```
+```git config --global user.email "tu_correo@ejemplo.com"```
+
+**Una vez configurado, vuelve a intentar el Paso 2.**
 
 ---
 
