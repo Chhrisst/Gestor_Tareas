@@ -55,7 +55,7 @@ Para mantener las ramas individuales (`dev`, `rama-christian`, `rama-favian`, `r
 * Presiona **`Ctrl + T`** (o ve al menú superior de Git y selecciona **Update Project**).
 * *Nota:* Esto solo descarga la información más reciente de GitHub para que Android Studio la detecte, pero no modifica tu código actual.
 
-### 2. Fusionar los cambios (Merge)``
+### 2. Fusionar los cambios (Merge)
 * Abre el menú desplegable de ramas en la parte superior derecha (donde aparece el nombre de tu rama actual).
 * Desplázate hacia abajo hasta la sección **Remote** (o expande la carpeta `origin`).
 * Haz clic sobre la rama **`origin/main`**.
