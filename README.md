@@ -36,12 +36,14 @@ El proyecto está construido siguiendo los principios de **Clean Architecture** 
 ## ⚙️ Configuración y Ejecución
 
 1. Clona este repositorio:
+   ```
    > git clone https://github.com/tu-usuario/Gestor_Tareas.git
+   ```
 
-2. Abre el proyecto en **Android Studio**.
-3. Sincroniza el proyecto con Gradle para descargar todas las dependencias.
-4. *Nota:* Asegúrate de configurar las variables de entorno necesarias o verificar la URL de la API en `core/utils/Constants.kt` antes de compilar.
-5. Ejecuta la aplicación en un emulador o dispositivo físico.
+3. Abre el proyecto en **Android Studio**.
+4. Sincroniza el proyecto con Gradle para descargar todas las dependencias.
+5. *Nota:* Asegúrate de configurar las variables de entorno necesarias o verificar la URL de la API en `core/utils/Constants.kt` antes de compilar.
+6. Ejecuta la aplicación en un emulador o dispositivo físico.
 
 ---
 
