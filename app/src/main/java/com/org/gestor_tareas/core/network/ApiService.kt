@@ -18,5 +18,11 @@ interface ApiService {
     suspend fun deleteTecnico(@Path("id") id: Int): Response<Unit>
 
     @POST("auth")
-    suspend fun autenticar(@Body request: AuthRequest): Response<AuthResponse>
+    suspend fun autenticar(@Body request: AuthRequest): Response<ApiResponse<AuthResponse>>
+
+    @POST("auth")
+    suspend fun googleLogin(@Body request: GoogleLoginRequest): Response<ApiResponse<AuthResponse>>
+
+    @POST("auth")
+    suspend fun verificarSesion(@Body request: VerificarSesionRequest): Response<ApiResponse<SessionStatusResponse>>
 }
