@@ -14,13 +14,14 @@ class RegisterViewModel(private val registerUseCase: RegisterUseCase) : ViewMode
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
-    fun register(nombre: String, email: String, password: String, onSuccess: () -> Unit) {
+    fun register(nombre: String, email: String, password: String, onSuccess: (String, String) -> Unit) {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, error = null) }
             val result = registerUseCase(nombre, email, password)
             if (result.isSuccess) {
+                val authResponse = result.getOrNull()
                 _uiState.update { it.copy(isLoading = false, isSuccess = true) }
-                onSuccess()
+                onSuccess(authResponse?.rol ?: "PENDIENTE", authResponse?.nombre ?: "Usuario")
             } else {
                 _uiState.update { it.copy(isLoading = false, error = result.exceptionOrNull()?.message) }
             }

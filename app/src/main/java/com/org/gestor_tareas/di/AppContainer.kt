@@ -9,8 +9,12 @@ class AppContainer(private val context: Context) {
         NetworkModule()
     }
 
-    private val repositoryModule by lazy {
+    val repositoryModule by lazy {
         RepositoryModule(context, networkModule)
+    }
+
+    val tokenDataStore by lazy {
+        repositoryModule.tokenDataStore
     }
 
     val useCaseModule by lazy {
@@ -22,7 +26,7 @@ class AppContainer(private val context: Context) {
     }
 
     val loginViewModel by lazy {
-        LoginViewModel(useCaseModule.loginUseCase)
+        LoginViewModel(useCaseModule.loginUseCase, useCaseModule.googleLoginUseCase)
     }
 
     val registerViewModel by lazy {

@@ -56,7 +56,8 @@ private val TextoClaro = Color(0xFFC7CCD6)
 
 @Composable
 fun DashboardScreen(
-    nombreAdministrador: String = "ADMINISTRADOR",
+    nombreAdministrador: String = "USUARIO",
+    rolUsuario: String = "TECNICO",
     onVerTecnicosClick: () -> Unit = {},
     onVerOrdenesClick: () -> Unit = {},
     onDelegarTareasClick: () -> Unit = {}
@@ -102,32 +103,36 @@ fun DashboardScreen(
                         fontSize = 17.sp
                     )
                     Text(
-                        text = fechaFormateada,
+                        text = "Rol: $rolUsuario | $fechaFormateada",
                         color = TextoClaro,
                         fontSize = 12.sp
                     )
                 }
             }
 
-            DashboardCard(
-                titulo = "Gestión de Técnicos",
-                iconoResId = R.drawable.icono_tecnicos,
-                colorAcento = AzulAcento,
-                textoBoton = "Ver Lista de Técnicos",
-                onBotonClick = onVerTecnicosClick
-            ) {
-                Text(
-                    text = "10 Técnicos Activos",
-                    color = TituloOscuro,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
-                )
-                Spacer(modifier = Modifier.height(10.dp))
-                EstadoFila(color = VerdeEstado, texto = "7 en Trabajando")
-                EstadoFila(color = AmarilloEstado, texto = "2 en Espera de trabajo")
-                EstadoFila(color = RojoEstado, texto = "1 Fuera de Servicio")
+            // SOLO EL ADMIN VE LA GESTIÓN DE TÉCNICOS
+            if (rolUsuario == "ADMIN") {
+                DashboardCard(
+                    titulo = "Gestión de Técnicos",
+                    iconoResId = R.drawable.icono_tecnicos,
+                    colorAcento = AzulAcento,
+                    textoBoton = "Ver Lista de Técnicos",
+                    onBotonClick = onVerTecnicosClick
+                ) {
+                    Text(
+                        text = "10 Técnicos Activos",
+                        color = TituloOscuro,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+                    EstadoFila(color = VerdeEstado, texto = "7 en Trabajando")
+                    EstadoFila(color = AmarilloEstado, texto = "2 en Espera de trabajo")
+                    EstadoFila(color = RojoEstado, texto = "1 Fuera de Servicio")
+                }
             }
 
+            // AMBOS PUEDEN VER LAS ÓRDENES (O según decidan después)
             DashboardCard(
                 titulo = "Estado de Órdenes",
                 iconoResId = R.drawable.icono_ordenes,
@@ -147,18 +152,21 @@ fun DashboardScreen(
                 EstadoFila(color = RojoEstado, texto = "4 Retrasadas")
             }
 
-            DashboardCard(
-                titulo = "Asignación de Trabajo",
-                iconoResId = R.drawable.icono_asignacion,
-                colorAcento = AmarilloAcento,
-                textoBoton = "Delegar Tareas",
-                onBotonClick = onDelegarTareasClick
-            ) {
-                Text(
-                    text = "Asignar lugar de trabajo",
-                    color = TextoOscuroSecundario,
-                    fontSize = 14.sp
-                )
+            // SOLO EL ADMIN VE LA ASIGNACIÓN DE TRABAJO
+            if (rolUsuario == "ADMIN") {
+                DashboardCard(
+                    titulo = "Asignación de Trabajo",
+                    iconoResId = R.drawable.icono_asignacion,
+                    colorAcento = AmarilloAcento,
+                    textoBoton = "Delegar Tareas",
+                    onBotonClick = onDelegarTareasClick
+                ) {
+                    Text(
+                        text = "Asignar lugar de trabajo",
+                        color = TextoOscuroSecundario,
+                        fontSize = 14.sp
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(8.dp))
