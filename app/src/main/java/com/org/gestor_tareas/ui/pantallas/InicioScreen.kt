@@ -1,20 +1,28 @@
 package com.org.gestor_tareas.ui.pantallas
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.org.gestor_tareas.R
+import com.org.gestor_tareas.core.utils.Constants
+import com.org.gestor_tareas.core.utils.iniciarSesionConGoogle
+import kotlinx.coroutines.launch
 
 @Composable
 fun InicioScreen(
@@ -23,6 +31,9 @@ fun InicioScreen(
 ) {
     val colorBotonOscuro = Color(0xFF142B59)
     val colorTextoSecundario = Color(0xFFA0A0A0)
+    
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -35,10 +46,11 @@ fun InicioScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .systemBarsPadding()
                 .padding(horizontal = 32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.statusBarsPadding())
+            
             Spacer(modifier = Modifier.weight(0.7f))
 
             Image(
@@ -77,13 +89,36 @@ fun InicioScreen(
             Text(text = "Continuar con", color = colorTextoSecundario, fontSize = 14.sp)
             Spacer(modifier = Modifier.height(24.dp))
 
-            Row(horizontalArrangement = Arrangement.spacedBy(24.dp), verticalAlignment = Alignment.CenterVertically) {
-                Image(painter = painterResource(id = R.drawable.facebook), contentDescription = "Facebook", modifier = Modifier.size(48.dp))
-                Image(painter = painterResource(id = R.drawable.google), contentDescription = "Google", modifier = Modifier.size(48.dp))
-                Image(painter = painterResource(id = R.drawable.apple), contentDescription = "Apple", modifier = Modifier.size(48.dp))
+            Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+                Image(
+                    painter = painterResource(id = R.drawable.google), 
+                    contentDescription = "Google", 
+                    modifier = Modifier
+                        .size(56.dp) // Un poco más grande al ser el único
+                        .clickable {
+                            scope.launch {
+                                iniciarSesionConGoogle(
+                                    context = context,
+                                    webClientId = Constants.GOOGLE_WEB_CLIENT_ID,
+                                    onSuccess = { idToken ->
+                                        Log.d("GoogleAuth", "ID Token obtenido: $idToken")
+                                        Toast.makeText(context, "Google Login Exitoso", Toast.LENGTH_SHORT).show()
+                                        // TODO: Enviar idToken al ViewModel para autenticación con el backend
+                                    },
+                                    onError = { error ->
+                                        Log.e("GoogleAuth", "Error: $error")
+                                        Toast.makeText(context, "Error: $error", Toast.LENGTH_LONG).show()
+                                    }
+                                )
+                            }
+                        }
+                )
             }
 
             Spacer(modifier = Modifier.weight(0.5f))
+            
+            // Añadimos padding solo al final del contenido, no al fondo
+            Spacer(modifier = Modifier.navigationBarsPadding())
         }
     }
 }
