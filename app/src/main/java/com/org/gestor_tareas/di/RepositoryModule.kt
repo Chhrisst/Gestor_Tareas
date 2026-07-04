@@ -17,7 +17,7 @@ class RepositoryModule(private val context: Context, networkModule: NetworkModul
         TecnicoRepositoryImpl(remoteDataSource)
     }
 
-    private val tokenDataStore by lazy {
+    val tokenDataStore by lazy {
         TokenDataStore(context)
     }
 

@@ -16,6 +16,10 @@ class UseCaseModule(repositoryModule: RepositoryModule) {
         LoginUseCase(repositoryModule.authRepository)
     }
 
+    val googleLoginUseCase by lazy {
+        GoogleLoginUseCase(repositoryModule.authRepository)
+    }
+
     val registerUseCase by lazy {
         RegisterUseCase(repositoryModule.authRepository)
     }
