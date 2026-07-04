@@ -71,4 +71,9 @@ dependencies {
 
     // DataStore
     implementation(libs.androidx.datastore)
+
+    // Google SSO (Credential Manager)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 }

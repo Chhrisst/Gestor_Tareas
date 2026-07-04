@@ -6,5 +6,5 @@ import retrofit2.Response
 
 interface AuthRepository {
     suspend fun autenticar(request: AuthRequest): Response<AuthResponse>
-    suspend fun guardarToken(token: String)
+    suspend fun guardarDatosAutenticacion(token: String, rol: String)
 }

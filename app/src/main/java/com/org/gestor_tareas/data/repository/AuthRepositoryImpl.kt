@@ -15,7 +15,7 @@ class AuthRepositoryImpl(
         return apiService.autenticar(request)
     }
 
-    override suspend fun guardarToken(token: String) {
-        tokenDataStore.saveToken(token)
+    override suspend fun guardarDatosAutenticacion(token: String, rol: String) {
+        tokenDataStore.saveAuthData(token, rol)
     }
 }
