@@ -23,6 +23,7 @@ El proyecto está construido siguiendo los principios de **Clean Architecture** 
 
 ## 📁 Estructura del Proyecto
 
+```
 > app/src/main/java/com/org/gestor_tareas/
 > ├── core/         # Utilidades generales, constantes y configuración base de red.
 > ├── data/         # Repositorios, fuentes de datos (Remote/Local) y Mappers.
@@ -30,6 +31,7 @@ El proyecto está construido siguiendo los principios de **Clean Architecture** 
 > ├── domain/       # Lógica de negocio, Modelos y Casos de Uso (Use Cases).
 > ├── navigation/   # Rutas y configuración de navegación de la app.
 > └── ui/           # Pantallas (Screens), ViewModels y estados de vista (UiState).
+```
 
 ## ⚙️ Configuración y Ejecución
 
