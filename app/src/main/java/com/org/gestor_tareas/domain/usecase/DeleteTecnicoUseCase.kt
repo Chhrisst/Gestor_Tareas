@@ -6,3 +6,5 @@ class DeleteTecnicoUseCase(private val repository: TecnicoRepository) {
         repository.deleteTecnico(id)
     }
 }
+
+
