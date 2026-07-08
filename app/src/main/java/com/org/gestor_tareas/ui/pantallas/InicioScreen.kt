@@ -26,8 +26,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun InicioScreen(
+    loginViewModel: LoginViewModel,
     onIniciarSesionClick: () -> Unit = {},
-    onRegistrarseClick: () -> Unit = {}
+    onRegistrarseClick: () -> Unit = {},
+    onGoogleLoginSuccess: (String, String) -> Unit = { _, _ -> }
 ) {
     val colorBotonOscuro = Color(0xFF142B59)
     val colorTextoSecundario = Color(0xFFA0A0A0)
@@ -35,13 +37,9 @@ fun InicioScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(
-            painter = painterResource(id = R.drawable.fondo),
-            contentDescription = "Fondo",
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+    LaunchedEffect(uiState.error) {
+        uiState.error?.let { Toast.makeText(context, it, Toast.LENGTH_LONG).show() }
+    }
 
         Column(
             modifier = Modifier
@@ -53,35 +51,25 @@ fun InicioScreen(
             
             Spacer(modifier = Modifier.weight(0.7f))
 
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Logo Tecofield",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(130.dp),
-                contentScale = ContentScale.Fit
-            )
+        if (uiState.isLoading) {
+            Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f)), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(color = Color.White)
+            }
+        }
 
+        Column(modifier = Modifier.fillMaxSize().padding(horizontal = 32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Spacer(modifier = Modifier.statusBarsPadding())
+            Spacer(modifier = Modifier.weight(0.7f))
+            Image(painter = painterResource(id = R.drawable.logo), contentDescription = "Logo", modifier = Modifier.fillMaxWidth().height(130.dp), contentScale = ContentScale.Fit)
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(
-                onClick = onIniciarSesionClick,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colorBotonOscuro, contentColor = Color.White),
-                shape = RoundedCornerShape(28.dp),
-                border = BorderStroke(1.dp, Color.White)
-            ) {
+            Button(onClick = onIniciarSesionClick, modifier = Modifier.fillMaxWidth().height(56.dp), colors = ButtonDefaults.buttonColors(containerColor = colorBotonOscuro, contentColor = Color.White), shape = RoundedCornerShape(28.dp), border = BorderStroke(1.dp, Color.White)) {
                 Text("INICIAR SESIÓN", fontWeight = FontWeight.Bold)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = onRegistrarseClick,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = colorBotonOscuro),
-                shape = RoundedCornerShape(28.dp)
-            ) {
+            Button(onClick = onRegistrarseClick, modifier = Modifier.fillMaxWidth().height(56.dp), colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = colorBotonOscuro), shape = RoundedCornerShape(28.dp)) {
                 Text("REGISTRARSE", fontWeight = FontWeight.Bold)
             }
 
@@ -114,7 +102,6 @@ fun InicioScreen(
                         }
                 )
             }
-
             Spacer(modifier = Modifier.weight(0.5f))
             
             // Añadimos padding solo al final del contenido, no al fondo

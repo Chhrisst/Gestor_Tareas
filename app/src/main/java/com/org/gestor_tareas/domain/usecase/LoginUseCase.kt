@@ -3,7 +3,6 @@ package com.org.gestor_tareas.domain.usecase
 import com.org.gestor_tareas.data.remote.dto.AuthRequest
 import com.org.gestor_tareas.data.remote.dto.AuthResponse
 import com.org.gestor_tareas.domain.repository.AuthRepository
-import retrofit2.Response
 
 class LoginUseCase(private val repository: AuthRepository) {
     suspend operator fun invoke(email: String, password: String): Result<AuthResponse> {

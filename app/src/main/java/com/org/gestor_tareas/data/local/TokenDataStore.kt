@@ -17,10 +17,10 @@ class TokenDataStore(private val context: Context) {
         private val ROL_KEY = stringPreferencesKey("user_rol")
     }
 
-    val token: Flow<String?> = context.dataStore.data
-        .map { preferences ->
-            preferences[TOKEN_KEY]
-        }
+    val token: Flow<String?> = context.dataStore.data.map { it[TOKEN_KEY] }
+    val rol: Flow<String?> = context.dataStore.data.map { it[ROL_KEY] }
+    val nombre: Flow<String?> = context.dataStore.data.map { it[NOMBRE_KEY] }
+    val email: Flow<String?> = context.dataStore.data.map { it[EMAIL_KEY] }
 
     val rol: Flow<String?> = context.dataStore.data
         .map { preferences ->

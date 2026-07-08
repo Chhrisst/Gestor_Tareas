@@ -1,7 +1,6 @@
 package com.org.gestor_tareas.domain.repository
 
-import com.org.gestor_tareas.data.remote.dto.AuthRequest
-import com.org.gestor_tareas.data.remote.dto.AuthResponse
+import com.org.gestor_tareas.data.remote.dto.*
 import retrofit2.Response
 
 interface AuthRepository {
