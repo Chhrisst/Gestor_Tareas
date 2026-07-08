@@ -14,15 +14,7 @@ class AuthRepositoryImpl(
         return apiService.autenticar(request)
     }
 
-    override suspend fun googleLogin(request: GoogleLoginRequest): Response<ApiResponse<AuthResponse>> {
-        return apiService.googleLogin(request)
-    }
-
-    override suspend fun verificarSesion(email: String): Response<ApiResponse<SessionStatusResponse>> {
-        return apiService.verificarSesion(VerificarSesionRequest(email))
-    }
-
-    override suspend fun guardarDatosAutenticacion(token: String, rol: String, nombre: String, email: String) {
-        tokenDataStore.saveAuthData(token, rol, nombre, email)
+    override suspend fun guardarDatosAutenticacion(token: String, rol: String) {
+        tokenDataStore.saveAuthData(token, rol)
     }
 }

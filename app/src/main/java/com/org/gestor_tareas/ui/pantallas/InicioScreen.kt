@@ -4,12 +4,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import com.org.gestor_tareas.R
 import com.org.gestor_tareas.core.utils.Constants
 import com.org.gestor_tareas.core.utils.iniciarSesionConGoogle
-import com.org.gestor_tareas.ui.pantallas.auth.LoginViewModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -37,14 +36,20 @@ fun InicioScreen(
     
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val uiState by loginViewModel.uiState.collectAsState()
 
     LaunchedEffect(uiState.error) {
         uiState.error?.let { Toast.makeText(context, it, Toast.LENGTH_LONG).show() }
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        Image(painter = painterResource(id = R.drawable.fondo), contentDescription = "Fondo", modifier = Modifier.fillMaxSize(), contentScale = ContentScale.Crop)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Spacer(modifier = Modifier.statusBarsPadding())
+            
+            Spacer(modifier = Modifier.weight(0.7f))
 
         if (uiState.isLoading) {
             Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f)), contentAlignment = Alignment.Center) {
@@ -76,21 +81,30 @@ fun InicioScreen(
                 Image(
                     painter = painterResource(id = R.drawable.google), 
                     contentDescription = "Google", 
-                    modifier = Modifier.size(56.dp).clickable {
-                        if (!uiState.isLoading) {
+                    modifier = Modifier
+                        .size(56.dp) // Un poco más grande al ser el único
+                        .clickable {
                             scope.launch {
                                 iniciarSesionConGoogle(
                                     context = context,
                                     webClientId = Constants.GOOGLE_WEB_CLIENT_ID,
-                                    onSuccess = { idToken -> loginViewModel.loginGoogle(idToken, onGoogleLoginSuccess) },
-                                    onError = { error -> Toast.makeText(context, "Error: $error", Toast.LENGTH_LONG).show() }
+                                    onSuccess = { idToken ->
+                                        Log.d("GoogleAuth", "ID Token obtenido: $idToken")
+                                        Toast.makeText(context, "Google Login Exitoso", Toast.LENGTH_SHORT).show()
+                                        // TODO: Enviar idToken al ViewModel para autenticación con el backend
+                                    },
+                                    onError = { error ->
+                                        Log.e("GoogleAuth", "Error: $error")
+                                        Toast.makeText(context, "Error: $error", Toast.LENGTH_LONG).show()
+                                    }
                                 )
                             }
                         }
-                    }
                 )
             }
             Spacer(modifier = Modifier.weight(0.5f))
+            
+            // Añadimos padding solo al final del contenido, no al fondo
             Spacer(modifier = Modifier.navigationBarsPadding())
         }
     }

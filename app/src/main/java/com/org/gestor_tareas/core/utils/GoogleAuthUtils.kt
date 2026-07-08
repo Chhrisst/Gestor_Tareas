@@ -25,9 +25,9 @@ suspend fun iniciarSesionConGoogle(
 
     // Opción para obtener el ID de Google
     val googleIdOption: GetGoogleIdOption = GetGoogleIdOption.Builder()
-        .setFilterByAuthorizedAccounts(false) // Permite elegir cuentas nuevas
+        .setFilterByAuthorizedAccounts(false)
         .setServerClientId(webClientId)
-        .setAutoSelectEnabled(false) // DESACTIVA la selección automática
+        .setAutoSelectEnabled(false)
         .build()
 
     // Petición de credenciales

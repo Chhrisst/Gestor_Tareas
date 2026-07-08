@@ -8,9 +8,6 @@ export const handler = async (event) => {
     if (method === "POST") {
         if (body.accion === "registro") return authController.registrarUsuario(event);
         if (body.accion === "login") return authController.loginUsuario(event);
-        if (body.accion === "google-login") return authController.loginGoogle(event);
-        if (body.accion === "cambiar-rol") return authController.cambiarRol(event);
-        if (body.accion === "verificar-sesion") return authController.verificarSesion(event);
     }
 
     return {

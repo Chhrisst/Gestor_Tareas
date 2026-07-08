@@ -9,8 +9,8 @@ class LoginUseCase(private val repository: AuthRepository) {
         return try {
             val response = repository.autenticar(AuthRequest("login", email, password))
             if (response.isSuccessful && response.body() != null) {
-                val authResponse = response.body()!!.data
-                repository.guardarDatosAutenticacion(authResponse.token, authResponse.rol, authResponse.nombre, authResponse.email)
+                val authResponse = response.body()!!
+                repository.guardarDatosAutenticacion(authResponse.token, authResponse.rol)
                 Result.success(authResponse)
             } else {
                 Result.failure(Exception("Error en el inicio de sesión: ${response.code()}"))
